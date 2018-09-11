@@ -1,0 +1,16 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.data.cassandra.core.CassandraTemplate" level="DEBUG"/>
+    <logger name="org.springframework.cassandra.core" level="DEBUG"/>
+    <logger name="ua.sam" level="DEBUG"/>
+
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
