@@ -5,6 +5,7 @@
 Step to reproduce
 
 Precondition
+
 JAVA 8
 
 Run ignite server part
@@ -18,5 +19,6 @@ Run test in ignite-client
 via IDE or maven
 
 mvn -Dtest=LoaderApplicationTests#testStreamAndUpdateContactWithBinary test
+
 mvn -Dtest=LoaderApplicationTests#testStreamAndUpdateContactWithoutBinary test
 
