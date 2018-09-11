@@ -26,3 +26,9 @@ or
 
 mvn -Dtest=LoaderApplicationTests#testStreamAndUpdateContactWithoutBinary test
 
+Problem
+
+We allocate new memory time to time.
+
+`2018-09-11 08:16:51,193  PhysicalMemoryPages: 35481`
+`2018-09-11 08:20:21,356  PhysicalMemoryPages: 35591`
