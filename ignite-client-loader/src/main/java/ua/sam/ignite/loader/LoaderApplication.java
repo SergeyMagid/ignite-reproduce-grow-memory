@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"ua.sam.ignite.loader.*"})
+@ComponentScan({"ua.sam.ignite.loader"})
 public class LoaderApplication {
 
 	public static void main(String[] args) {

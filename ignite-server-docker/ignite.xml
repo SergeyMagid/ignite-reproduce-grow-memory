@@ -27,6 +27,22 @@
                         <property name="metricsEnabled" value="true"/>
                     </bean>
                 </property>
+
+	        <property name="dataRegionConfigurations">
+                 <list>
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <property name="name" value="contactsEx.1"/>
+                        <property name="maxSize" value="#{1L * 1024 * 1024 * 1024}"/>
+                        <property name="metricsEnabled" value="true"/>
+                    </bean>
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <property name="name" value="contactsEx.2"/>
+                        <property name="maxSize" value="#{7L * 1024 * 1024 * 1024}"/>
+                        <property name="metricsEnabled" value="true"/>
+		   </bean>
+		</list>
+		</property>
+
             </bean>
         </property>
 

@@ -3,14 +3,19 @@ package ua.sam.ignite.loader.config;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
+import org.apache.ignite.cache.CacheAtomicityMode;
+import org.apache.ignite.cache.CacheMode;
+import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.DataRegionConfiguration;
 import org.apache.ignite.configuration.DataStorageConfiguration;
 import org.apache.ignite.configuration.IgniteConfiguration;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ua.sam.ignite.shared.loader.ContactLoadFactory;
 
 import java.util.Arrays;
 
@@ -18,12 +23,6 @@ import java.util.Arrays;
 @Slf4j
 public class IgniteConfig {
 
-    @Value("${loader.cassandra.contact-points}")
-    private String contactPoints;
-    @Value("${loader.cassandra.keyspace-name:'contacts_dump'}")
-    private String keyspace;
-    @Value("${loader.cassandra.table-name:'contacts_partitioned'}")
-    private String table;
 
     @Value("${ignite.client.mode:true}")
     private boolean clientMode;
@@ -43,9 +42,22 @@ public class IgniteConfig {
 
         DataRegionConfiguration defStorage = new DataRegionConfiguration();
         defStorage.setMetricsEnabled(true);
-        cfg.setDataStorageConfiguration(new DataStorageConfiguration());
-        cfg.getDataStorageConfiguration()
-                .setDefaultDataRegionConfiguration(defStorage);
+
+        DataStorageConfiguration dsCfg = new DataStorageConfiguration();
+        dsCfg.setDefaultDataRegionConfiguration(defStorage);
+        dsCfg.setDataRegionConfigurations(createDataReg(1), createDataReg(2), createDataReg(5592));
+        cfg.setDataStorageConfiguration(dsCfg);
+
+
+        {
+            CacheConfiguration cacheConfig = new CacheConfiguration("c_observer");
+            cacheConfig.setCacheMode(CacheMode.PARTITIONED);
+            cacheConfig.setAtomicityMode(CacheAtomicityMode.ATOMIC);
+
+            cacheConfig.setCacheStoreFactory(new ContactLoadFactory());
+
+            cfg.setCacheConfiguration(cacheConfig);
+        }
 
         {
             TcpDiscoverySpi discoSpi = new TcpDiscoverySpi();
@@ -57,5 +69,13 @@ public class IgniteConfig {
         }
 
         return Ignition.start(cfg);
+    }
+
+    @NotNull
+    private DataRegionConfiguration createDataReg(int orgId) {
+        DataRegionConfiguration dataRegionConfiguration = new DataRegionConfiguration();
+        dataRegionConfiguration.setMetricsEnabled(true);
+        dataRegionConfiguration.setName("contactsEx."+orgId);
+        return dataRegionConfiguration;
     }
 }
