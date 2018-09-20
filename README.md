@@ -20,10 +20,6 @@ via IDE or maven
 
 cd ignite-client-loader/
 
-mvn -Dtest=LoaderApplicationTests#testStreamAndUpdateContactWithBinary test
-
-or
-
 mvn -Dtest=LoaderApplicationTests#testStreamAndUpdateContactWithoutBinary test
 
 Problem
