@@ -26,5 +26,8 @@ Problem
 
 We allocate new memory time to time.
 
-`2018-09-11 08:16:51,193  PhysicalMemoryPages: 35481`
-`2018-09-11 08:20:21,356  PhysicalMemoryPages: 35591`
+https://www.awesomescreenshot.com/image/3619800/ad604d44bae0f241a2618197c2be8af4
+
+
+Also I have used grafana+ inflxubDb for visualize trend of fillFactor and offHeapSize
+( for example https://hub.docker.com/r/samuelebistoletti/docker-statsd-influxdb-grafana/ )
